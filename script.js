@@ -43,7 +43,7 @@ const nav=document.getElementById("nav");
 const content=document.getElementById("content");
 
 let pageIndex=0;
-let itemsPerPage=2;
+let itemsPerPage=3;
 
 
 loadItems();
@@ -58,7 +58,7 @@ function loadItems(){
             <img src="${images[i].src}"/>
         </div>
         <div>
-        <span>${images[i].desc}</span>
+            <span>${images[i].desc}</span>
         </div>
         `;
         content.append(item);
@@ -68,6 +68,15 @@ function loadItems(){
 
 function loadPageNav(){
     nav.innerHTML="";
+    var leftarrow=document.createElement('div');
+    leftarrow.innerHTML=`<i class="fa-solid fa-left-long"></i>`;
+    leftarrow.addEventListener('click',(e)=>{
+         if(pageIndex-1>=0){
+            pageIndex-=1;
+            loadItems();
+         }
+    })
+    nav.append(leftarrow);
     for(let i=0;i<images.length/itemsPerPage;i++){
         const span=document.createElement('span');
         span.innerHTML=i+1;
@@ -80,4 +89,15 @@ function loadPageNav(){
         }
         nav.append(span);
     }
+    rightarrow=document.createElement('div');
+    rightarrow.innerHTML=`<i class="fa-solid fa-right-long"></i>`;
+    var size=(images.length)/itemsPerPage;
+    rightarrow.addEventListener('click',(e)=>{
+        if(pageIndex+1<(images.length)/itemsPerPage){
+            pageIndex=pageIndex+1;
+            loadItems();
+            console.log(pageIndex);
+        }
+    });
+    nav.append(rightarrow);
 }
